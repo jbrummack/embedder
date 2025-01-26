@@ -1,0 +1,38 @@
+[package]
+name = "embedder"
+version = "0.1.0"
+edition = "2021"
+
+#[[bin]]
+#name = "serve"
+
+[lib]
+
+[dependencies]
+burn = { version = "0.15.0", optional = true }
+burn-ndarray = { version = "0.15.0", optional = true }
+burn-wgpu = { version = "0.15.0", optional = true }
+image = "0.25.5"
+ndarray = "0.16.1"
+rayon = "1.10.0"
+simsimd = "6.2.3"
+thiserror = "2.0.11"
+ort = { version = "=2.0.0-rc.9", features = [
+    "coreml",
+    "xnnpack",
+] } #, optional = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+
+[build-dependencies]
+burn-import = { version = "~0.15", optional = true }
+
+
+#ALWAYS TEST IN RELEASE MODE
+# because testing with ndArray backend takes 120s in debug mode
+#
+
+[features]
+#ort = ["dep:ort"]
+server = []
+burn = ["dep:burn", "dep:burn-ndarray", "dep:burn-wgpu", "dep:burn-import"]
