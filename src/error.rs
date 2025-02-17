@@ -9,9 +9,15 @@ pub enum EmbedderError {
     #[cfg(feature = "burn")]
     #[error("{0:?}")]
     Burn(DataError),
+    #[cfg(not(feature = "burn"))]
+    #[error("Burn isnt compiled in")]
+    Burn,
     #[cfg(feature = "ort")]
     #[error("{0:?}")]
     Ort(#[from] ort::Error),
+    #[cfg(not(feature = "ort"))]
+    #[error("Compiled without ONNX RT")]
+    Ort,
     #[error("{0}")]
     Image(#[from] ImageError),
     #[error("{0}")]

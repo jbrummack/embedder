@@ -25,12 +25,9 @@ pub fn efficientnet_apple_session() -> EmbedderResult<Session> {
         .commit_from_memory(EFFICIENTNET)?;
     Ok(session)
 }
+#[cfg(feature = "ort")]
+use crate::{DynamicImage, EmbedderResult, ImageConvert, EFFICIENTNET, IMAGENET_DEFAULT_CONFIG};
 
-use crate::DynamicImage;
-use crate::EmbedderResult;
-use crate::ImageConvert;
-use crate::EFFICIENTNET;
-use crate::IMAGENET_DEFAULT_CONFIG;
 #[cfg(feature = "ort")]
 impl OrtEmbedder {
     pub fn new(session: Session) -> Self {
@@ -51,17 +48,14 @@ impl OrtEmbedder {
 
 #[cfg(test)]
 mod tests {
-    #[cfg(feature = "burn")]
-    use crate::{cosine, EfficientNetEmbedder};
-
-    use super::*;
+    //use super::*;
     use crate::cosine::cosine_similarity;
-    #[cfg(feature = "burn")]
-    use burn_ndarray::NdArray;
-
-    #[cfg(feature = "burn")]
+    //#[cfg(feature = "burn")]
+    //use burn_ndarray::NdArray;
+    #[cfg(all(feature = "burn", feature = "ort"))]
     #[test]
     fn result_consistency() {
+        use crate::EfficientNetEmbedder;
         let image = image::open("test_resources/nutella2.jpg").unwrap();
         let session = Session::builder()
             .unwrap()
@@ -85,7 +79,7 @@ mod tests {
     }
 
     ///This tests if the same/similar object has a higher similarity to the same class despite having a different background
-    fn off_mark(coke1: Vec<f32>, coke2: Vec<f32>, nutella1: Vec<f32>, nutella2: Vec<f32>) {
+    fn _off_mark(coke1: Vec<f32>, coke2: Vec<f32>, nutella1: Vec<f32>, nutella2: Vec<f32>) {
         let c1c2 = cosine_similarity(&coke1, &coke2).unwrap();
         let n1n2 = cosine_similarity(&nutella1, &nutella2).unwrap();
 

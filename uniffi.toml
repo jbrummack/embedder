@@ -1,0 +1,6 @@
+[bindings.kotlin]
+package_name = "org.efpc.uniffi.embedder"
+
+[bindings.swift]
+cdylib_name = "embedder_ffi"
+omit_argument_labels = true

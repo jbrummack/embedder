@@ -1,3 +1,5 @@
+uniffi::include_scaffolding!("embedder");
+
 #[cfg(feature = "burn")]
 use burn::{
     prelude::Backend,
@@ -14,6 +16,7 @@ use error::EmbedderError;
 use error::EmbedderResult;
 use image::imageops::FilterType;
 pub use image::DynamicImage;
+//use mobile::{BackendType, Embedding, EmbeddingRequest, ModelType};
 #[cfg(feature = "burn")]
 use model::efficientnet::Model;
 #[cfg(feature = "ort")]
@@ -22,10 +25,14 @@ use ort::value::{TensorValueType, Value};
 mod cosine;
 pub mod embedder;
 pub mod error;
+pub mod mobile;
+#[allow(unused_imports)]
+pub use mobile::*;
 #[cfg(feature = "burn")]
 mod model;
 pub mod onnx;
 
+#[cfg(feature = "ort")]
 pub const EFFICIENTNET: &[u8] = include_bytes!("model/efficientnet.onnx");
 
 const IMAGENET_DEFAULT_MEAN: [f32; 3] = [0.485, 0.456, 0.406];
@@ -143,6 +150,7 @@ impl<B: Backend> EfficientNetEmbedder<B> {
         */
         let device = B::Device::default();
         let model = Model::<B>::default();
+        println!("{:?}", model);
         let convert = IMAGENET_DEFAULT_CONFIG;
         Ok(EfficientNetEmbedder {
             model,
