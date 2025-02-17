@@ -7,6 +7,7 @@ edition = "2021"
 #name = "serve"
 
 [lib]
+name = "embedder"
 
 [dependencies]
 burn = { version = "0.15.0", optional = true }
@@ -20,11 +21,15 @@ thiserror = "2.0.11"
 ort = { version = "=2.0.0-rc.9", features = [
     "coreml",
     "xnnpack",
-] } #, optional = true }
+], optional = true }
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
 
 
 [build-dependencies]
+uniffi = { version = "0.28", features = [
+    "build",
+    "scaffolding-ffi-buffer-fns",
+] }
 burn-import = { version = "~0.15", optional = true }
 
 
@@ -36,3 +41,4 @@ burn-import = { version = "~0.15", optional = true }
 #ort = ["dep:ort"]
 server = []
 burn = ["dep:burn", "dep:burn-ndarray", "dep:burn-wgpu", "dep:burn-import"]
+ort = ["dep:ort"]

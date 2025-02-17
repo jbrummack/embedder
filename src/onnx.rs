@@ -1,12 +1,16 @@
+#[cfg(feature = "ort")]
 pub struct OrtEmbedder {
     model: Session,
     convert: ImageConvert,
 }
 
 //pub use image::DynamicImage;
+#[cfg(feature = "ort")]
 pub use ort::session::Session;
+#[cfg(feature = "ort")]
 pub use ort::Error;
 
+#[cfg(feature = "ort")]
 pub fn efficientnet_apple_session() -> EmbedderResult<Session> {
     use ort::execution_providers::{CoreMLExecutionProvider, XNNPACKExecutionProvider};
     use ort::session::builder::GraphOptimizationLevel;
@@ -27,7 +31,7 @@ use crate::EmbedderResult;
 use crate::ImageConvert;
 use crate::EFFICIENTNET;
 use crate::IMAGENET_DEFAULT_CONFIG;
-
+#[cfg(feature = "ort")]
 impl OrtEmbedder {
     pub fn new(session: Session) -> Self {
         Self {
@@ -125,7 +129,7 @@ mod tests {
             "Nutella1 should be more similar to Nutella2 than to c2n1"
         );
     }
-    //#[cfg(feature = "ort")]
+    #[cfg(feature = "ort")]
     #[test]
     fn test_efficientnet_ort() {
         use ort::session::builder::GraphOptimizationLevel;

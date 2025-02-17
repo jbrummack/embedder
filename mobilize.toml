@@ -1,0 +1,29 @@
+[rust]
+platforms = [
+    "universal-apple-darwin",
+    #    "aarch64-apple-darwin",
+    #    "x86_64-apple-darwin",
+    "aarch64-apple-ios",
+    "aarch64-apple-ios-sim",
+    #    "x86_64-apple-ios-sim",
+    #    "aarch64-apple-ios-macabi",
+    #    "x86_64-apple-ios-macabi",
+]
+udl-path = "src/embedder.udl"
+uniffi-build-name = "uniffi-build"
+udl-namespace = "embedder"
+
+[swift]
+import-name = "EmbedderSDK"
+package-name = "Embedder"    #PKG TITLE
+package-folder = "swift_pkg"
+swift-tools-version = "5.10"
+
+
+[swift-dependencies]
+"onnxruntime-swift-package-manager" = "1.20.0"
+
+
+[environment]
+"aarch64-apple-ios" = { "ORT_LIB_LOCATION" = "/Users/Shared/ONNX1_20/onnx-release-iphoneos" }
+"aarch64-apple-ios-sim" = { "ORT_LIB_LOCATION" = "/Users/Shared/ONNX1_20/onnx-release-iphonesimulator" }

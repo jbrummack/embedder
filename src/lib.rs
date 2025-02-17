@@ -16,6 +16,7 @@ use image::imageops::FilterType;
 pub use image::DynamicImage;
 #[cfg(feature = "burn")]
 use model::efficientnet::Model;
+#[cfg(feature = "ort")]
 use ort::value::{TensorValueType, Value};
 
 mod cosine;
@@ -59,7 +60,7 @@ pub struct ImageConvert {
 }
 
 impl ImageConvert {
-    //#[cfg(feature = "ort")]
+    #[cfg(feature = "ort")]
     pub fn ort_value(&self, image: &DynamicImage) -> EmbedderResult<Value<TensorValueType<f32>>> {
         let normalized_data = self.create_data(image);
         let tensor_shape = vec![

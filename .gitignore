@@ -1,1 +1,8 @@
 /target
+.DS_Store
+/bindings
+/embedder.xcframework
+/include
+/libs
+/result
+/swift_pkg
